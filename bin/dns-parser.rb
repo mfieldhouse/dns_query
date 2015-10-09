@@ -3,16 +3,16 @@ require 'csv'
 
 start_time = Time.now
 
-ip_addresses = File.read("ip-long.txt").split
+ip_addresses = File.read("../input/ip-addresses.txt").split
 found_fqdn = []
 output = {}
-output_filename = "output.csv"
+output_filename = "../output/output.csv"
 output_file = File.open(output_filename, "w")
 output_file.puts "VIP IP,Short A Name,A Name Domain,Fully-Qualified A Name,Short Alias Name,Alias Domain,Fully-Qualified Alias Name\n"
 
 # Set variables for search progress counters
 number_of_ip_addresses = ip_addresses.length
-number_of_zone_files = Dir['zone-files/*'].length
+number_of_zone_files = Dir['../input/zone-files/*'].length
 puts "Number of IP addresses: " + number_of_ip_addresses.to_s
 puts "Number of zone files: " + number_of_zone_files.to_s
 zone_file_progress = 1
@@ -21,7 +21,7 @@ puts "-----"
 puts "Searching for A records"
 
 # Search for A records
-Dir['zone-files/*'].each do |filename|
+Dir['../input/zone-files/*'].each do |filename|
   puts "#{zone_file_progress} of " + number_of_zone_files.to_s  + " - " + File.basename(filename)
 
   file = File.read(filename)
@@ -53,7 +53,7 @@ puts "Searching for CNAMEs"
 found_hosts = found_fqdn.map { |x| x.split('.')[0] }
 
 # Search for CNAMEs
-Dir['zone-files/*'].each do |filename|
+Dir['../input/zone-files/*'].each do |filename|
   puts "#{zone_file_progress} of " + number_of_zone_files.to_s  + " - " + File.basename(filename)
 
   file = File.read(filename)
